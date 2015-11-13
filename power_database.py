@@ -24,7 +24,11 @@ class PowerDatabase:
             db = self.database)
 
     def store_reading(self, power, internal, external):
-        self.store_power("cc128", power)
+        try:
+            self.store_power("cc128", power)
+        except MySQLdb.OperationalError:
+            self.connect_database()
+            self.store_power("cc128", power)
         self.store_temperature("cc128", internal)
         self.store_temperature("openwthr", external)
 
