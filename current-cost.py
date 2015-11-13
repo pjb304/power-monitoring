@@ -13,8 +13,8 @@ BAUDRATE = 57600
 TIMEOUT = 5
 def get_external_temp():
     try:
-        return loads(urlopen("http://api.openweathermap.org/data/2.5/weather?q=Southampton&units=metric", timeout=2).read())[u'main'][u'temp']
-    except Excpetion:
+        return loads(urlopen("http://api.openweathermap.org/data/2.5/weather?q=Southampton&units=metric&APPID=615df34fae24f3b1e0de372fe3f80bfa", timeout=2).read())[u'main'][u'temp']
+    except Exception:
         return 0
 
 def connect_receiver():
@@ -26,7 +26,7 @@ def connect_receiver():
             resp = serial_port.readline()
             if( None == resp and resp == ""):
                 continue
-	    parsed = BeautifulSoup(resp)
+            parsed = BeautifulSoup(resp)
             if( parsed.msg is None):
                 continue
             internal_temp = float(parsed.msg.tmpr.text)
